@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pit Stop - F1 News</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+        /* --- NEW STYLE - Light Theme --- */
+
+        /* Custom base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            @apply bg-gray-100 text-gray-800 antialiased; /* Light background, dark text */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            @apply font-bold;
+        }
+
+        /* Header styling */
+        header {
+            @apply bg-white shadow-sm; /* White header with subtle shadow */
+        }
+        header h1 {
+            @apply text-3xl font-black tracking-tighter text-gray-900;
+        }
+        header .logo-accent {
+             @apply text-red-600; /* Red accent */
+        }
+        header .tagline {
+            @apply text-gray-500 text-sm;
+        }
+
+        /* Main content container */
+        main.container {
+             @apply max-w-7xl; /* Slightly wider container */
+        }
+
+        /* Featured Article Styling */
+        .featured-article-container {
+             @apply bg-white rounded-lg p-6 shadow-md mb-8; /* White card */
+        }
+        .featured-article-container .featured-image,
+        .featured-article-container .featured-image-fl { /* Combined styles */
+            @apply w-full object-contain rounded-md mb-2 shadow-sm; /* Consistent image style */
+        }
+        .featured-article-container .featured-image {
+             @apply h-72; /* Standard featured image height */
+        }
+        .featured-article-container .featured-image-fl {
+            @apply h-[60vh]; /* Viewport height for full-bleed style images */
+        }
+        .featured-article-container .image-credit {
+            @apply block text-xs text-gray-500 italic mb-5 text-right; /* Adjusted margin */
+        }
+        .featured-article-container h2 {
+             @apply text-4xl font-extrabold text-red-700 mb-3 leading-tight flex items-center; /* Larger, bolder, red title */
+        }
+         .featured-article-container .meta {
+             @apply text-gray-500 text-sm mb-5; /* Adjusted margin */
+         }
+         .featured-article-container p {
+             @apply mb-4 text-gray-700 leading-relaxed text-base; /* Slightly darker paragraph text */
+         }
+         .featured-article-container strong {
+            @apply font-bold text-red-700; /* Strong emphasis */
+         }
+         .featured-article-container em {
+            @apply italic text-red-700; /* Italic emphasis */
+         }
+         .featured-article-container ul,
+         .featured-article-container ol {
+            @apply list-inside mb-4 space-y-2 text-gray-700;
+         }
+          .featured-article-container li::marker {
+             @apply text-red-500 font-bold; /* Custom marker color */
+          }
+         .featured-article-container ul li {
+             @apply list-disc ml-4;
+         }
+         .featured-article-container ol li {
+            @apply list-decimal ml-4;
+         }
+
+        /* Sidebar Styling */
+        aside h3.section-title {
+            @apply text-2xl font-bold mb-5 text-gray-900 border-b border-gray-300 pb-2;
+        }
+
+        /* Sidebar Article Card Styling - NEW LAYOUT */
+        .article-card {
+            @apply bg-white rounded-lg shadow-sm overflow-hidden flex items-stretch hover:shadow-md transition-shadow duration-300 cursor-pointer;
+            /* Use flexbox, keep items aligned */
+        }
+        .article-card img.card-thumbnail { /* Specific class for sidebar thumb */
+            @apply w-28 h-auto object-cover flex-shrink-0; /* Fixed width, auto height, cover */
+            /* Removed direct child selector > */
+        }
+        .article-card .content {
+             @apply p-4 flex-grow flex flex-col justify-center; /* Padding, grow, vertical center */
+        }
+        .article-card h3 {
+            @apply text-base font-semibold text-red-600 mb-1 leading-snug; /* Red title */
+        }
+        .article-card p {
+            @apply text-xs text-gray-500 leading-tight; /* Smaller text */
+        }
+        .article-card.hidden {
+            @apply !hidden; /* Ensure hidden class works */
+        }
+         /* Special card styling adjustments */
+         .article-card.bg-gray-700 {
+              @apply bg-gray-200; /* Lighter special background */
+         }
+          .article-card .text-teal-400 {
+              @apply text-teal-600; /* Adjust special colors for light theme */
+          }
+          .article-card .text-blue-400 {
+              @apply text-blue-600;
+          }
+
+
+         /* Inline Icon Styling (Mostly Unchanged, check colors) */
+         .icon-inline {
+             @apply inline-block w-5 h-5 mr-1 align-middle relative;
+             top: -1px;
+             filter: invert(30%) sepia(10%) saturate(500%) hue-rotate(180deg) brightness(90%) contrast(90%); /* Example filter for dark icon on light bg */
+         }
+         .icon-inline-lg {
+             @apply inline-block w-7 h-7 mr-2 align-middle relative;
+             top: -2px;
+              filter: invert(30%) sepia(10%) saturate(500%) hue-rotate(180deg) brightness(90%) contrast(90%); /* Example filter */
+         }
+          .featured-article-container h2 > img.icon-inline-lg { /* Target icon inside H2 */
+              filter: invert(35%) sepia(80%) saturate(5000%) hue-rotate(345deg) brightness(90%) contrast(110%); /* Make icon in H2 red */
+         }
+
+
+        /* Footer styling */
+        footer {
+             @apply mt-16 py-8 border-t border-gray-300 text-center text-gray-500 text-sm;
+        }
+
+        /* Standings Table Styles - Light Theme */
+        .standings-table {
+            @apply w-full text-left text-sm mt-4 border-collapse;
+        }
+        .standings-table th {
+            @apply p-3 bg-gray-200 text-gray-700 font-semibold border-b-2 border-gray-300 text-sm uppercase;
+        }
+         .standings-table td {
+            @apply p-3 border-b border-gray-200 text-gray-700;
+        }
+        .standings-table tbody tr:last-child td {
+             @apply border-b-0;
+        }
+        .standings-table tbody tr:nth-child(even) {
+            @apply bg-gray-50; /* Very light gray for alternating rows */
+        }
+        .standings-table tbody tr:hover {
+             @apply bg-gray-100; /* Hover effect */
+        }
+        .standings-table .rank {
+            @apply font-bold text-center w-10 text-gray-600;
+        }
+         .standings-table .points {
+            @apply font-semibold text-right w-16;
+        }
+        /* Standings table icon */
+        .icon-table {
+             @apply inline-block w-4 h-4 mr-2 align-middle relative;
+             top: -1px;
+             /* Keep SVG colors defined inline */
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+            <div>
+            <a href="#" id="logo-link" title="Go to Homepage">
+                <h1 class="text-3xl font-black tracking-tighter text-gray-900">Pit<span class="logo-accent">Stop🏁</span></h1>
+                <p class="tagline">Your quick F1 news fix.</p>
+            </a>
+            </div>
+            <!-- Navigation could go here -->
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 md:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <section class="lg:col-span-2">
+                <div id="main-article-content" class="featured-article-container bg-white rounded-lg p-6 md:p-8 shadow-md">
+                    <!-- Initial Featured Article Content -->
+                    <h2><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/newspaper.svg" class="icon-inline-lg" alt="News icon"> Lewis Hamilton x Ferrari – A Historic Bet Full of Promise</h2>
+                    <p class="meta">Published: April 9, 2025</p>
+                    <img src="lewis-hamilton-ferrari.jpg" alt="Lewis Hamilton joining Ferrari" class="featured-image">
+                    <p class="image-credit">Image source: Scuderia Ferrari/@photodre</p>
+                    <p>In 2025, Formula 1 witnessed one of its biggest shake-ups: Lewis Hamilton—seven-time world champion—left Mercedes after 11 years to join Ferrari, the most iconic and emotionally charged team in F1 history.</p>
+                    <p>Why does this matter? Because it’s more than just a career move. It’s about <strong>legacy</strong>. Ferrari hasn’t won a drivers’ title since 2007. Hamilton, now 40, isn’t just chasing one more trophy—he’s chasing greatness. If he can bring Ferrari back to the top, he cements himself as the driver who rewrote history for <em>two</em> legendary teams.</p>
+                    <p>And Ferrari knows it. They’ve made major investments, brought in fresh energy, and are betting on Hamilton’s experience and leadership to guide them through a turning point. His teammate, Charles Leclerc, is fast and hungry, and if the chemistry works, this could become the most powerful driver pairing on the grid.</p>
+                    <p>The expectation? <strong>2025 is a building year</strong>. Podiums are realistic. Wins? Maybe a few. A title? Unlikely, unless the car evolves rapidly. But what matters most is laying the groundwork for 2026 and beyond—when big regulation changes arrive, and Ferrari aims to be at the top with Hamilton as the centerpiece.</p>
+                </div>
+            </section>
+
+            <aside>
+                <h3 class="section-title">More News</h3>
+                <div class="space-y-4">
+                    <!-- Sidebar Cards: NEW LAYOUT (Image Left, Text Right) -->
+                    <div class="article-card" data-article-id="ferrari-start">
+                        <img src="F677_still_04_v11_169.avif" alt="Ferrari F1 car 2025" class="card-thumbnail w-28 h-full object-cover">
+                        <div class="content">
+                            <h3>🟥 Ferrari in 2025: High Hopes, Rocky Start – Is the Title Still Possible?</h3>
+                            <p>Ferrari entered 2025 with big expectations but faces reliability issues...</p>
+                        </div>
+                    </div>
+                    <div class="article-card" data-article-id="2025-season">
+                         <img src="F1-2025-Calendar-16x9.avif" alt="F1 2025 Season Start" class="card-thumbnail w-28 h-full object-cover">
+                         <div class="content">
+                            <h3>🏎️ 2025 F1 Season: What to Expect Amid a New Era</h3>
+                            <p>McLaren dominates early, Red Bull struggles, and the 2026 regs loom...</p>
+                        </div>
+                    </div>
+                    <div class="article-card" data-article-id="2026-regs">
+                        <img src="fia_cover_yt.png" alt="Concept image for 2026 F1 regulations" class="card-thumbnail w-28 h-full object-cover">
+                        <div class="content">
+                            <h3>🏁 2026 F1 Regulations: What You Need to Know</h3>
+                            <p>Sustainable fuel, new engines, and aero changes aim to shake up the grid...</p>
+                        </div>
+                    </div>
+                     <div class="article-card" data-article-id="norris-piastri">
+                        <img src="Lando_Norris_and_Oscar_Piastri_in_McLaren_gear.jpg" alt="Lando Norris and Oscar Piastri side-by-side" class="card-thumbnail w-28 h-full object-cover">
+                        <div class="content">
+                            <h3>🟠 Norris vs. Piastri: Who Will Lead McLaren in 2025?</h3>
+                            <p>The performance gap is closing between McLaren's star drivers...</p>
+                        </div>
+                    </div>
+                     <div class="article-card" data-article-id="3-races">
+                        <img src="1744179728141813.JPG" alt="F1 Podium" class="card-thumbnail w-28 h-full object-cover">
+                        <div class="content">
+                            <h3><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/newspaper.svg" class="icon-inline" alt="News icon"> 2025 F1 Season: The First Three Grands Prix Recapped</h3>
+                            <p>Highlights from Australia, China, and Japan...</p>
+                        </div>
+                    </div>
+                     <div class="article-card" data-article-id="redbull-struggles">
+                        <img src="70aa70c80b7982558bfd75eb94b568a0ac43cec6.jpg" alt="Max Verstappen driving the Red Bull RB20" class="card-thumbnail w-28 h-full object-cover">
+                        <div class="content">
+                            <h3><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/newspaper.svg" class="icon-inline" alt="News icon"> Red Bull’s Struggles in 2025: Max Verstappen’s Success Amidst Team Issues</h3>
+                            <p>Verstappen shines, but the RB20 and the second seat pose challenges...</p>
+                        </div>
+                    </div>
+                     <div class="article-card bg-gray-200" data-article-id="driver-lineup"> <!-- Adjusted special bg -->
+                         <img src="2025-Helmets-16x9 (2).avif" alt="Collage of F1 2025 driver helmets" class="card-thumbnail w-28 h-full object-cover">
+                        <div class="content">
+                            <h3 class="text-teal-600"><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/users.svg" class="icon-inline" alt="Users icon"> 2025 F1 Driver Line-up</h3>
+                            <p>See the full grid for the 2025 season...</p>
+                        </div>
+                    </div>
+                     <div class="article-card bg-gray-200" data-article-id="hamilton-ferrari"> <!-- Adjusted special bg -->
+                         <img src="lewis-hamilton-ferrari.jpg" alt="Lewis Hamilton graphic in Ferrari colours" class="card-thumbnail w-28 h-full object-cover">
+                        <div class="content">
+                            <h3 class="text-red-600"><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/newspaper.svg" class="icon-inline" alt="News icon"> Lewis Hamilton x Ferrari – A Historic Bet Full of Promise</h3>
+                            <p>Read the featured story again...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="section-title mt-10">Team Standings</h3>
+                <p class="text-sm text-gray-500 mb-2">Current standings</p>
+                <div class="overflow-x-auto rounded-lg bg-white shadow-sm">
+                    <table class="standings-table">
+                        <thead>
+                            <tr>
+                                <th class="rank">#</th>
+                                <th>Team</th>
+                                <th class="points">Pts</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Standings data remains the same, but will inherit new table styles -->
+                            <tr><td class="rank">1</td><td><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/shield.svg" class="icon-table text-orange-500" alt="Team icon"> McLaren </td><td class="points">111</td></tr>
+                            <tr><td class="rank">2</td><td><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/shield.svg" class="icon-table text-teal-500" alt="Team icon"> Mercedes </td><td class="points">75</td></tr> 
+                            <tr><td class="rank">3</td><td><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/shield.svg" class="icon-table text-indigo-500" alt="Team icon"> Red Bull </td><td class="points">61</td></tr> 
+                            <tr><td class="rank">4</td><td><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/shield.svg" class="icon-table text-red-500" alt="Team icon"> Ferrari </td><td class="points">35</td></tr>
+                            <tr><td class="rank">5</td><td><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/shield.svg" class="icon-table text-sky-600" alt="Team icon"> Williams </td><td class="points">19</td></tr> 
+                            <tr><td class="rank">6</td><td><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/shield.svg" class="icon-table text-gray-400" alt="Team icon"> Haas </td><td class="points">15</td></tr> 
+                            <tr><td class="rank">7</td><td><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/shield.svg" class="icon-table text-green-600" alt="Team icon"> Aston Martin </td><td class="points">10</td></tr>
+                            <tr><td class="rank">8</td><td><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/shield.svg" class="icon-table text-blue-600" alt="Team icon"> Racing Bulls</td><td class="points">7</td></tr>
+                            <tr><td class="rank">9</td><td><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/shield.svg" class="icon-table text-lime-500" alt="Team icon"> Sauber</td><td class="points">6</td></tr>
+                            <tr><td class="rank">10</td><td><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/shield.svg" class="icon-table text-pink-500" alt="Team icon"> Alpine </td><td class="points">0</td></tr>
+                            </tbody>
+                    </table>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container mx-auto">
+            &copy; 2025 Pit Stop F1 News. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- Hidden Article Data remains structurally the same, content will be loaded into the new featured container style -->
+    <div id="article-data" style="display: none;">
+        <!-- Hamilton Ferrari -->
+        <div id="hamilton-ferrari">
+            <h2><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/newspaper.svg" class="icon-inline-lg" alt="News icon"> Lewis Hamilton x Ferrari – A Historic Bet Full of Promise</h2>
+            <p class="meta">Published: April 9, 2025</p>
+            <img src="lewis-hamilton-ferrari.jpg" alt="Lewis Hamilton joining Ferrari" class="featured-image">
+            <p class="image-credit">Image source: Scuderia Ferrari/@photodre</p>
+            <p>In 2025, Formula 1 witnessed one of its biggest shake-ups: Lewis Hamilton—seven-time world champion—left Mercedes after 11 years to join Ferrari, the most iconic and emotionally charged team in F1 history.</p>
+            <p>Why does this matter? Because it’s more than just a career move. It’s about <strong>legacy</strong>. Ferrari hasn’t won a drivers’ title since 2007. Hamilton, now 40, isn’t just chasing one more trophy—he’s chasing greatness. If he can bring Ferrari back to the top, he cements himself as the driver who rewrote history for <em>two</em> legendary teams.</p>
+            <p>And Ferrari knows it. They’ve made major investments, brought in fresh energy, and are betting on Hamilton’s experience and leadership to guide them through a turning point. His teammate, Charles Leclerc, is fast and hungry, and if the chemistry works, this could become the most powerful driver pairing on the grid.</p>
+            <p>The expectation? <strong>2025 is a building year</strong>. Podiums are realistic. Wins? Maybe a few. A title? Unlikely, unless the car evolves rapidly. But what matters most is laying the groundwork for 2026 and beyond—when big regulation changes arrive, and Ferrari aims to be at the top with Hamilton as the centerpiece.</p>
+        </div>
+        <!-- Ferrari Start -->
+        <div id="ferrari-start">
+            <h2>🟥 Ferrari in 2025: High Hopes, Rocky Start – Is the Title Still Possible?</h2>
+            <p class="meta">Published: April 8, 2025</p>
+            <img src="F677_still_02_v11_169.avif" alt="Ferrari SF-25 on track" class="featured-image">
+            <p class="image-credit">Image source: Scuderia Ferrari</p>
+            <p>Ferrari entered 2025 with big expectations. With a strong driver lineup featuring <strong>Lewis Hamilton</strong> alongside <strong>Charles Leclerc</strong> and a solid car, the team hoped to challenge for the title. But after the first three races—Australia, China, and Japan—the reality is a bit different.</p>
+            <p><strong>So, how’s it going?</strong></p>
+            <p>The SF-25 car is quick, but not consistently fast enough over a full race. Ferrari’s biggest problem is its reliability, especially during longer runs. The disqualification in China didn’t help, but upgrades are on the way, so improvements are expected soon.</p>
+            <p><strong>What about Hamilton?</strong></p>
+            <p> Lewis has adapted quickly, but it’s been a tough start. A 10th place in Australia, a Sprint win in China, and a 7th in Japan show his skill, but he’s been frustrated with the car's handling. Still, Hamilton's experience and feedback are valuable—he’s pushing Ferrari to improve and has a long-term vision for the team.</p>
+            <p><strong>Should we worry?</strong></p>
+            <p> For now, Ferrari fans shouldn’t panic. The title might be out of reach this year, but it’s not all doom and gloom. With 2026 bringing major regulation changes, this season could be a “break year” to lay the groundwork for a title push in the future.</p>
+            <p><strong>Bottom line?</strong></p>
+            <p>2025 is shaping up to be a building year, not a championship one. With the right upgrades and teamwork, Ferrari can be a contender—but it’ll be 2026 that truly matters.</p>
+        </div>
+         <!-- 2025 Season -->
+         <div id="2025-season">
+            <h2>🏎️ 2025 F1 Season: What to Expect Amid a New Era</h2>
+            <p class="meta">Published: April 7, 2025</p>
+            <img src="F1-2025-Calendar-16x9.avif" alt="F1 2025 Season graphic" class="featured-image">
+            <p class="image-credit">Image source: formula1.com</p>
+            <p>The 2025 Formula 1 season has already proven to be full of surprises. After the first three races—Australia, China, and Japan—it's clear that <strong>McLaren</strong> has emerged as the dominant force, while Red Bull is struggling, with only Max Verstappen keeping the team competitive.</p>
+            <p><strong>What’s going on?</strong></p>
+            <p>McLaren’s resurgence is hard to ignore. Lando Norris and Oscar Piastri are firing on all cylinders, challenging for wins and podiums. Meanwhile, Red Bull, despite Verstappen’s continued brilliance, is struggling with car balance and consistency, leaving them vulnerable. Ferrari and Mercedes are still playing catch-up, with Ferrari’s SF-25 showing promise but lacking race-long performance.</p>
+            <p><strong>The big twist: 2026 regulations</strong></p>
+            <p>The 2026 season will introduce major regulation changes, especially with new engine rules. This could completely reshape the competitive landscape. For now, 2025 might be a year of preparation for that new era, where teams will try to perfect their strategies and car setups ahead of the bigger challenge in 2026.</p>
+            <p><strong>Should we expect fireworks this season?</strong></p>
+            <p>2025 is shaping up to be a season of intense battles, with McLaren leading the charge. Red Bull will fight to regain its footing, while Ferrari and Mercedes push to close the gap. But with the new regulations coming in 2026, expect teams to use this year to lay the groundwork for the future.</p>
+            <p><strong>Bottom line?</strong></p>
+            <p>While McLaren leads the way, <strong>2025 is likely a year of transition</strong>, not a full-blown title race against Verstappen. The real fireworks will come in 2026, when the new regulations will shake up the grid.</p>
+         </div>
+        <!-- 2026 Regs -->
+         <div id="2026-regs">
+            <h2><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/settings-2.svg" class="icon-inline-lg" alt="Settings icon"> 2026 F1 Regulations: What You Need to Know</h2>
+            <p class="meta">Published: April 6, 2025</p>
+            <img src="fia_cover_yt.png" alt="FIA 2026 Regulations visual" class="featured-image">
+            <p class="image-credit">Image source: Youtube / FIA</p>
+            <p>In 2026, Formula 1 is set for a big change with new regulations that will shake up the sport. These changes are aimed at improving the racing, making the cars more sustainable, and keeping the competition close.</p>
+            <p>Here’s what’s changing:</p>
+            <ul>
+                <li><strong>New Engine Rules</strong>: F1 cars will switch to <em>100% sustainable fuel</em> and a <em>new hybrid engine formula</em>. The new engines will have more electrical power and less reliance on traditional fuel, making them greener while still providing the speed fans love.</li>
+                <li><strong>Aerodynamics</strong>: Teams will have to design cars with stricter aerodynamic rules, meaning the cars will be less sensitive to turbulence behind other cars. This is great for racing because it should make it easier for cars to follow each other and overtake.</li>
+                <li><strong>Cost Cap and Fairness</strong>: To make the sport more competitive, F1 is tightening the budget cap on teams. This will help smaller teams compete more equally with the bigger teams, like Mercedes or Red Bull, leveling the playing field.</li>
+                <li><strong>Tires and Chassis</strong>: There will also be new tires and minor changes to the chassis to improve safety and racing performance, making the cars more durable and capable of handling the high speeds in a safer way.</li>
+            </ul>
+            <p><strong>Why it matters:</strong> These changes could make F1 racing more exciting, with closer battles between teams. The increased focus on sustainability will also make the sport more eco-friendly, which is important for the future.</p>
+        </div>
+        <!-- Norris Piastri -->
+        <div id="norris-piastri">
+             <h2><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/swords.svg" class="icon-inline-lg" alt="Swords icon"> Norris vs. Piastri: Who Will Lead McLaren in 2025?</h2>
+            <p class="meta">Published: April 5, 2025</p>
+            <img src="Lando_Norris_and_Oscar_Piastri_in_McLaren_gear.jpg" alt="Lando Norris and Oscar Piastri in McLaren gear" class="featured-image">
+            <p class="image-credit">Image source: McLaren Racing</p>
+            <p>McLaren is off to a flying start in 2025, with arguably the fastest car on the grid. But behind the success, a key question is growing louder: <strong>who’s the team’s number one driver—Lando Norris or Oscar Piastri?</strong></p>
+            <p><strong>A Quick Recap: 2024 in Review</strong></p>
+            <p>In 2024, McLaren made huge progress. <strong>Lando Norris</strong>, the British driver and long-time team member, was the clear leader—scoring regular podiums and pushing Red Bull on pace. Oscar Piastri, in only his second F1 season, impressed with his calm approach and speed, but still trailed Norris over the year.</p>
+            <p>However, there were signs of tension: in races where both drivers were fighting at the front, <em>McLaren sometimes struggled to decide who to favor</em>—splitting strategies or hesitating on team orders. It cost them valuable points and raised questions about leadership within the team.</p>
+            <p><strong>2025 So Far: Things Are Changing</strong></p>
+            <p>This season, the rivalry has reached a new level.</p>
+            <ul>
+                <li><strong>Australia</strong>: Piastri’s home race, but Norris stole the show with a dominant win.</li>
+                <li><strong>China</strong>: Piastri struck back with a confident victory—his first of the year.</li>
+                <li><strong>Japan</strong>: Both drivers on the podium again, with Norris slightly ahead.</li>
+            </ul>
+             <p>What’s clear is that <strong>the performance gap is almost gone</strong>. Piastri has matured, and he’s now matching Norris in pace and execution. The battle for team leadership is wide open.</p>
+             <p><strong>Why It Matters</strong></p>
+            <p>In a title fight, teams usually back one driver to maximize their chances. Letting both race freely works—until it doesn’t. McLaren’s past (like the infamous Hamilton vs. Alonso battle in 2007) shows how damaging internal conflict can be.</p>
+            <p>If they want to win championships, <strong>they’ll eventually have to make a call</strong>. And right now, it’s not an easy one.</p>
+            <p><strong>So Who Leads McLaren Now?</strong></p>
+            <p>Norris still has the upper hand in consistency and experience, but <strong>Piastri is no longer the understudy</strong>. If he keeps delivering wins, McLaren might have to rethink who they back.</p>
+            <p>Bottom line: McLaren has a golden chance in 2025—but the outcome may depend on how they manage their two rising stars. Norris leads for now, but Piastri is coming fast.</p>
+        </div>
+        <!-- 3 Races -->
+         <div id="3-races">
+             <h2><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/flag.svg" class="icon-inline-lg" alt="Flag icon"> 2025 Formula 1 Season: The First Three Grands Prix Recapped</h2>
+            <p class="meta">Published: April 4, 2025</p>
+            <img src="1744179728141813.JPG" alt="Montage of F1 2025 first three races" class="featured-image-fl">
+            <p class="image-credit">Image sources: formula1.com / planetf1.com / REUTERS-Issei Kato</p>
+            <p>The 2025 Formula 1 season has already delivered some surprising twists and intense competition. After three races in Australia, China, and Japan, it’s clear that <strong>McLaren</strong> is the team to watch, while <strong>Red Bull</strong> and <strong>Ferrari</strong> face challenges in different areas.</p>
+            <p><strong>Australian Grand Prix (Round 1) — McLaren Strikes First</strong></p>
+            <p>The season opener in Melbourne was a chaotic affair, with <strong>Lando Norris</strong> taking a well-deserved victory after a race filled with changing weather conditions and multiple strategic battles. McLaren looked on top form from the start, with Norris holding off a charging <strong>Max Verstappen</strong>, who finished second. <strong>George Russell</strong> rounded out the podium, making it a solid start for Mercedes.</p>
+            <p>In Australia, there was no sprint race, but it was clear from the race itself that McLaren was in strong form, with both Norris and teammate <strong>Oscar Piastri</strong> showing impressive speed. The race demonstrated that McLaren is ready to challenge for race wins this season.</p>
+            <p><strong>Chinese Grand Prix (Round 2) — McLaren Dominates, Ferrari’s Misfortunes</strong></p>
+            <p>The Chinese Grand Prix in Shanghai was another eventful weekend. McLaren dominated the race with <strong>Oscar Piastri</strong> taking his first-ever F1 win, ahead of teammate <strong>Lando Norris</strong> in second. The McLaren 1-2 finish showed they had the strongest car, and it’s clear that the team is a serious contender in 2025.</p>
+            <p>But it wasn’t all smooth sailing for everyone. <strong>Lewis Hamilton</strong>, who joined Ferrari this season, got a major boost by winning the <em>sprint race</em> — his first for Ferrari. The win was a good sign of his adaptation to the new team. However, things took a turn after the main race. Post-race inspections revealed several technical violations. Hamilton was disqualified due to a breach concerning the car’s floor, while <strong>Charles Leclerc</strong> and <strong>Pierre Gasly</strong> also faced disqualifications for their cars being underweight. These penalties shook up the standings and were a tough blow for Ferrari’s hopes.</p>
+            <p><strong>Japanese Grand Prix (Round 3) — Verstappen Shows Why He’s Still a Threat</strong></p>
+            <p>The third race in Suzuka saw a confident performance from <strong>Max Verstappen</strong>, who took the win in dominating fashion. Despite some struggles in earlier races, Red Bull’s Verstappen showed that he still has the speed and racecraft to win, even if the car is no longer the dominant force it was in previous seasons. McLaren’s Norris and Piastri once again finished strongly in second and third, solidifying their positions as serious threats for the championship.</p>
+            <p>In Japan, there was no sprint race, but Verstappen’s victory reminded everyone why he’s still one of the best on the grid. While <strong>Red Bull</strong> isn’t as dominant as in the past few years, Max’s ability to extract the most from the car keeps them in the fight for the title.</p>
+        </div>
+        <!-- Red Bull Struggles -->
+         <div id="redbull-struggles">
+            <h2><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/gauge.svg" class="icon-inline-lg" alt="Gauge icon"> Red Bull’s Struggles in 2025: Max Verstappen’s Success Amidst Team Issues</h2>
+            <p class="meta">Published: April 3, 2025</p>
+            <img src="70aa70c80b7982558bfd75eb94b568a0ac43cec6.jpg" alt="Max Verstappen driving RB20" class="featured-image">
+            <p class="image-credit">Image source: IMAGO</p>
+            <p>Max Verstappen continues to shine, but Red Bull is facing challenges in 2025, following a tough season in 2024 where they were beaten by McLaren. While Verstappen delivers strong results, Red Bull’s dominance has faded, and the car is no longer as consistent as it was in previous seasons.</p>
+            <p><strong>Max Verstappen’s Performance</strong></p>
+            <p>Max remains at the top of his game, securing podiums and wins despite the RB20 not being as dominant as Red Bull's previous cars. His skill continues to stand out, but he can’t carry the team alone to both the Drivers' and Constructors' Championships.</p>
+            <p><strong>Red Bull’s Declining Car Performance</strong></p>
+            <p>The RB20 is still competitive, but McLaren has closed the gap, making Red Bull’s dominance in 2024 feel like a thing of the past. The car’s performance varies from race to race, leaving the team vulnerable to other strong competitors.</p>
+            <p><strong>Tsunoda Replaces Lawson: Second Seat Trouble</strong></p>
+            <p>Red Bull’s second seat remains problematic. Liam Lawson was promoted to replace Sergio Perez, but after just two races, his performance didn’t meet expectations, leading to his replacement by Yuki Tsunoda. Tsunoda showed more promise than Lawson in his first race, though he still needs to improve for Red Bull to have a consistent challenge for the Constructors’ Championship.</p>
+            <p><strong>What Does This Mean for Red Bull?</strong></p>
+            <p>Max Verstappen is still a Drivers' Championship contender, but Red Bull needs a stronger second driver to stay competitive in the Constructors' Championship. Tsunoda’s promising start offers hope, but more consistency from both drivers and improved car performance are crucial.</p>
+            <p><strong>What’s Next for Red Bull?</strong></p>
+            <p>To stay competitive, Red Bull needs to fix the RB20’s inconsistencies and ensure Tsunoda can deliver solid results. With Verstappen’s talent, they can still challenge for titles, but they need to improve to stay ahead of McLaren and other rivals.</p>
+        </div>
+        <!-- Driver Lineup -->
+         <div id="driver-lineup">
+            <h2><img src="https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/users.svg" class="icon-inline-lg" alt="Users icon"> 2025 F1 Driver Line-up</h2>
+            <p class="meta">Reference Data</p>
+            <img src="2025-Helmets-16x9 (2).avif" alt="F1 2025 Helmets" class="featured-image">
+            <p class="image-credit">Graphic: formula1.com</p>
+            <ol>
+                <li><strong>McLaren:</strong> Lando Norris & Oscar Piastri​ (No changes)</li>
+                <li><strong>Ferrari:</strong> Charles Leclerc & Lewis Hamilton​ (Hamilton replaces Sainz)</li>
+                <li><strong>Red Bull Racing:</strong> Max Verstappen & Yuki Tsunoda​ (Tsunoda replaces Lawson after 2 races)</li>
+                <li><strong>Mercedes:</strong> George Russell & Andrea Kimi Antonelli​ (Antonelli replaces Hamilton)</li>
+                <li><strong>Aston Martin:</strong> Fernando Alonso & Lance Stroll​ (No changes)</li>
+                <li><strong>Alpine:</strong> Pierre Gasly & Jack Doohan​ (No changes)</li>
+                <li><strong>Haas:</strong> Oliver Bearman & Esteban Ocon​ (Bearman & Ocon replace Magnussen & Hülkenberg)</li>
+                <li><strong>Racing Bulls:</strong> Isack Hadjar & Liam Lawson​ (Hadjar debuts, Lawson returns)</li>
+                <li><strong>Williams:</strong> Alexander Albon & Carlos Sainz (Sainz replaces Colapinto)</li>
+                <li><strong>Sauber:</strong> Nico Hülkenberg & Gabriel Bortoleto​ (Hülkenberg joins, Bortoleto debuts)</li>
+            </ol>
+        </div>
+    </div>
+
+<script>
+        // --- JavaScript remains exactly the same as the previous version ---
+        // It will work with the new structure as it relies on IDs and data-attributes
+        const mainArticleContainer = document.getElementById('main-article-content');
+        const articleCards = document.querySelectorAll('.article-card');
+        const sidebarCardsContainer = document.querySelector('aside .space-y-4');
+        const logoLink = document.getElementById('logo-link'); // Get the logo link
+
+        let currentFeaturedArticleId = 'hamilton-ferrari';
+
+        function displayArticle(articleId) {
+            if (articleId === currentFeaturedArticleId) {
+                mainArticleContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+            const articleContentElement = document.getElementById(articleId);
+            if (!mainArticleContainer) {
+                 console.error("Main article container not found!");
+                 return;
+            }
+            if (articleContentElement) {
+                const previousCard = sidebarCardsContainer.querySelector(`.article-card[data-article-id="${currentFeaturedArticleId}"]`);
+                if (previousCard) {
+                    previousCard.classList.remove('hidden');
+                } else {
+                    if (currentFeaturedArticleId) {
+                        console.warn(`Could not find previous sidebar card for ID: ${currentFeaturedArticleId}`);
+                    }
+                }
+                const newCard = sidebarCardsContainer.querySelector(`.article-card[data-article-id="${articleId}"]`);
+                if (newCard) {
+                    newCard.classList.add('hidden');
+                } else {
+                     console.warn(`Could not find new sidebar card for ID: ${articleId}`);
+                }
+                mainArticleContainer.innerHTML = articleContentElement.innerHTML;
+                currentFeaturedArticleId = articleId;
+                mainArticleContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                console.warn(`Article content element not found for ID: ${articleId}`);
+                mainArticleContainer.innerHTML = '<p class="text-red-500 p-4">Error: Could not load article content.</p>'; // Error color updated
+                const cardToReShow = sidebarCardsContainer.querySelector(`.article-card[data-article-id="${currentFeaturedArticleId}"]`);
+                 if(cardToReShow) cardToReShow.classList.remove('hidden');
+                 const cardToReHide = sidebarCardsContainer.querySelector(`.article-card[data-article-id="${articleId}"]`);
+                 if(cardToReHide) cardToReHide.classList.add('hidden');
+            }
+        }
+
+        articleCards.forEach(card => {
+            card.addEventListener('click', (event) => {
+                const clickedCard = event.target.closest('.article-card');
+                if (clickedCard) {
+                    const articleId = clickedCard.dataset.articleId;
+                    if (articleId) {
+                        displayArticle(articleId);
+                    }
+                }
+            });
+        });
+
+    if (logoLink) {
+        logoLink.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent the '#' from changing the URL
+            displayArticle('hamilton-ferrari'); // Load the default article
+        });
+    }
+
+        if (!document.getElementById(currentFeaturedArticleId)) {
+             console.error(`Initial article content not found for ID: ${currentFeaturedArticleId}`);
+        }
+        const initialSidebarCard = sidebarCardsContainer.querySelector(`.article-card[data-article-id="${currentFeaturedArticleId}"]`);
+        if (!initialSidebarCard) {
+             console.warn(`Initial sidebar card not found for ID: ${currentFeaturedArticleId}. Cannot hide it.`);
+        } else {
+             initialSidebarCard.classList.add('hidden');
+        }
+</script>
+
+</body>
+</html>
